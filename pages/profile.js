@@ -1,5 +1,5 @@
 import { useActiveProfile } from '@lens-protocol/react-web'
-import { ContentFocus, ProfileOwnedByMe, useCreatePost } from '@lens-protocol/react-web'
+import { ContentFocus, ProfileOwnedByMe, CollectPolicyType, useCreatePost, AnyonePolicy } from '@lens-protocol/react-web'
 
 
 export default function MyProfile () {
@@ -15,19 +15,19 @@ export default function MyProfile () {
 
   return (
     <div>
-      <Compose publisher={data.id}/>
+      <Compose publisher={data}/>
       <p>Active profile: {data.handle}</p>
     </div>
   )
 }
 
-function upload(){
+async function upload(){
   return 'https://ipfs.moralis.io:2053/ipfs/QmPH1bNkXepEQUJ9k3qs1oxvUPb1KPza9H51kjzM1GfHTH/loan-details'
 }
 
 function Compose ({ publisher }) {
-  const { execute: create } = useCreatePost({
-    profileId: publisher,
+  const { execute: create, error } = useCreatePost({
+    publisher,
     upload
   })
 
@@ -51,7 +51,7 @@ const onSubmit = async (event) => {
 
 return (
   <div>
-    <p>Active profile: {publisher}</p>
+    <p>Active profile: {publisher.id}</p>
     <form onSubmit={onSubmit}>
       <button type='submit'>SUBMIT</button>
     </form>
