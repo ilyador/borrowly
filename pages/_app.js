@@ -5,8 +5,14 @@ import { publicProvider } from 'wagmi/providers/public'
 import { development, production } from '@lens-protocol/react-web'
 import { bindings as wagmiBindings } from '@lens-protocol/wagmi'
 import { LensProvider } from '@lens-protocol/react-web'
+import { Roboto } from 'next/font/google'
+import { createTheme } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
+
 
 const { provider, webSocketProvider } = configureChains([polygon, mainnet], [publicProvider()])
+
 
 const client = createClient({
   autoConnect: true,
@@ -20,11 +26,40 @@ const lensConfig = {
 }
 
 
+export const roboto = Roboto({
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  fallback: ['Helvetica', 'Arial', 'sans-serif']
+})
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#70d297'
+    },
+    secondary: {
+      main: '#d9d9d9'
+    },
+    background: {
+      default: '#fdebdb'
+    }
+  },
+  typography: {
+    fontFamily: roboto.style.fontFamily
+  }
+})
+
+
+
 export default function App ({ Component, pageProps }) {
   return (
     <WagmiConfig client={client}>
       <LensProvider config={lensConfig}>
-        <Component {...pageProps} />
+        <ThemeProvider theme={theme}>
+          <CssBaseline/>
+          <Component {...pageProps} />
+        </ThemeProvider>
       </LensProvider>
     </WagmiConfig>
   )

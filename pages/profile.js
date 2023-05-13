@@ -1,5 +1,13 @@
 import { useActiveProfile } from '@lens-protocol/react-web'
-import { ContentFocus, ProfileOwnedByMe, CollectPolicyType, useCreatePost, AnyonePolicy } from '@lens-protocol/react-web'
+import { ContentFocus, useCreatePost } from '@lens-protocol/react-web'
+import Link from 'next/link'
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import axios from 'axios'
+import Stack from '@mui/material/Stack'
+import Paper from '@mui/material/Paper'
 
 
 export default function MyProfile () {
@@ -13,15 +21,11 @@ export default function MyProfile () {
 
   if (!data) return <p>No active profile</p>
 
-  return (
-    <div>
-      <Compose publisher={data}/>
-      <p>Active profile: {data.handle}</p>
-    </div>
-  )
+  return <Compose publisher={data}/>
+
 }
 
-async function upload(){
+async function upload () {
   return 'https://ipfs.moralis.io:2053/ipfs/QmPH1bNkXepEQUJ9k3qs1oxvUPb1KPza9H51kjzM1GfHTH/loan-details'
 }
 
@@ -31,29 +35,32 @@ function Compose ({ publisher }) {
     upload
   })
 
-const onSubmit = async (event) => {
-  event.preventDefault()
+  const onSubmit = async (event) => {
+    event.preventDefault()
 
-  try {
-    const _res = await create({
-      content: 'HELLO POST',
-      contentFocus: ContentFocus.TEXT,
-      locale: 'en'
-    })
+    try {
+      const _res = await create({
+        content: 'HELLO POST',
+        contentFocus: ContentFocus.TEXT,
+        locale: 'en'
+      })
 
-    console.log(_res)
+      console.log(_res)
+    }
+
+    catch (error) {
+      console.log(error)
+    }
   }
 
-  catch (error) {
-    console.log(error)
-  }
+  return (
+    <Container maxWidth='md'>
+      <Typography variant='h6'>
+        Active profile: {publisher.id}
+      </Typography>
+      <form onSubmit={onSubmit}>
+        <Button variant='contained' type='submit'>SUBMIT</Button>
+      </form>
+    </Container>
+  )
 }
-
-return (
-  <div>
-    <p>Active profile: {publisher.id}</p>
-    <form onSubmit={onSubmit}>
-      <button type='submit'>SUBMIT</button>
-    </form>
-  </div>
-)}
