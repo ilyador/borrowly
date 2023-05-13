@@ -53,14 +53,12 @@ function Compose ({ publisher }) {
     }
   }
 
-  return (
-    <Container maxWidth='md'>
+  return (<>
       <Typography variant='h6'>
         Active profile: {publisher.id}
       </Typography>
       <form onSubmit={onSubmit}>
         <Button variant='contained' type='submit'>SUBMIT</Button>
       </form>
-    </Container>
-  )
+  </>)
 }

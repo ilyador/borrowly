@@ -1,6 +1,8 @@
 import { useWalletLogin } from '@lens-protocol/react-web'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
 
 
 export default function LoginButton () {
@@ -12,7 +14,7 @@ export default function LoginButton () {
     connector: new InjectedConnector()
   })
 
-  async function onLoginClick() {
+  async function onLoginClick () {
     if (isConnected) await disconnectAsync()
 
     const { connector } = await connectAsync()
@@ -23,10 +25,8 @@ export default function LoginButton () {
     }
   }
 
-  return (
-    <div>
-      {loginError && <p>{loginError}</p>}
-      <button disabled={isLoginPending} onClick={onLoginClick}>Log in</button>
-    </div>
-  )
+  return (<>
+    {loginError && <p>{loginError}</p>}
+    <Button variant='contained' disabled={isLoginPending} onClick={onLoginClick}>Log in</Button>
+  </>)
 }

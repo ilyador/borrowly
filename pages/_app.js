@@ -1,4 +1,5 @@
 import '@/styles/globals.css'
+import Head from 'next/head'
 import { configureChains, createClient, WagmiConfig } from 'wagmi'
 import { mainnet, polygon } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
@@ -9,6 +10,7 @@ import { Roboto } from 'next/font/google'
 import { createTheme } from '@mui/material/styles'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
+import Container from '@mui/material/Container'
 
 
 const { provider, webSocketProvider } = configureChains([polygon, mainnet], [publicProvider()])
@@ -53,14 +55,22 @@ const theme = createTheme({
 
 
 export default function App ({ Component, pageProps }) {
-  return (
+  return (<>
+    <Head>
+      <title>Borrowly</title>
+      <meta name='description' content='Social lending'/>
+      <meta name='viewport' content='width=device-width, initial-scale=1'/>
+      <link rel='icon' href='/favicon.ico'/>
+    </Head>
     <WagmiConfig client={client}>
       <LensProvider config={lensConfig}>
         <ThemeProvider theme={theme}>
           <CssBaseline/>
-          <Component {...pageProps} />
+          <Container maxWidth='md'>
+            <Component {...pageProps} />
+          </Container>
         </ThemeProvider>
       </LensProvider>
     </WagmiConfig>
-  )
+  </>)
 }
