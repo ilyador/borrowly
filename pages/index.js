@@ -11,12 +11,6 @@ export default function Home () {
   const [defaultAccount, setDefaultAccount] = useState(null)
   const [connButtonText, setConnButtonText] = useState('Connect Wallet')
 
-  const [currentContractVal, setCurrentContractVal] = useState(null)
-
-  const [provider, setProvider] = useState(null)
-  const [signer, setSigner] = useState(null)
-  const [contract, setContract] = useState(null)
-
 
   async function connectWalletHandler () {
     if (window.ethereum && window.ethereum.isMetaMask) {
@@ -48,7 +42,6 @@ export default function Home () {
       </Head>
       <main className={styles.main}>
         <h1>HELLO</h1>
-
         <button onClick={connectWalletHandler}>CONNECT</button>
       </main>
     </>
