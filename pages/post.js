@@ -1,19 +1,14 @@
 import { useActiveProfile } from '@lens-protocol/react-web'
 import { ContentFocus, useCreatePost } from '@lens-protocol/react-web'
-import Link from 'next/link'
-import Container from '@mui/material/Container'
+import Grid from '@mui/material/Unstable_Grid2';
+import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import axios from 'axios'
-import Stack from '@mui/material/Stack'
-import Paper from '@mui/material/Paper'
 
 
 export default function MyProfile () {
   const { data, loading, error } = useActiveProfile()
-
-  console.log(data)
 
   if (loading) return <p>Loading...</p>
 
@@ -54,11 +49,44 @@ function Compose ({ publisher }) {
   }
 
   return (<>
-      <Typography variant='h6'>
-        Active profile: {publisher.id}
+    <Typography variant='h6'>
+      Active profile: {publisher.id}
+    </Typography>
+    <Box component='form' onSubmit={onSubmit}>
+      <Typography variant='h3'>
+        Request for a borrow
       </Typography>
-      <form onSubmit={onSubmit}>
-        <Button variant='contained' type='submit'>SUBMIT</Button>
-      </form>
+      <TextField
+        fullWidth
+        label='Borrow Title'
+        margin='normal'
+      />
+      <TextField
+        fullWidth
+        multiline
+        label='Borrow Description'
+        margin='normal'
+      />
+      <Typography variant='h6'>
+        Amount & interest
+      </Typography>
+      <Grid container spacing={2}>
+        <Grid xs={6}>
+          <TextField
+            fullWidth
+            label='Borrow Title'
+            margin='normal'
+          />
+        </Grid>
+        <Grid xs={6}>
+          <TextField
+            fullWidth
+            label='Borrow Title'
+            margin='normal'
+          />
+        </Grid>
+      </Grid>
+      <Button sx={{ my: 2 }} variant='contained' type='submit'>Preview request</Button>
+    </Box>
   </>)
 }
